@@ -28,7 +28,7 @@ typedef struct {
 PSsphere spheres[NUM_SPHERES];
 
 float colors[][3] = {
-    {1,1,1},{0,0,1},{0,1,0},{0,1,1},{0.5,0,0.5},{1,0,1},{1,0.5,0},{1,1,1},{0.5,1,0}
+    {1,1,1},{0,0,1},{0,0.55,0.75},{0,1,1},{0.5,0,0.5},{1,0,1},{1,0.5,0},{1,1,1},{0.5,1,0}
 };
 struct points{
     float x;
@@ -40,8 +40,6 @@ struct direction_ratio{
     float y;
     float z;
 };
-
-
 // GLUT_BITMAP_8_BY_13
 // GLUT_BITMAP_9_BY_15
 // GLUT_BITMAP_TIMES_ROMAN_10
@@ -70,7 +68,7 @@ void drawTextSmall( float x, float y, int r, int g, int b,const char *string ){
 void drawLines(int u,int v){
     glBegin(GL_LINES);
     glColor3f(1,0,1);
-    glPointSize(10);
+    glPointSize(20);
     glVertex3f(spheres[u].x,spheres[u].y,spheres[u].z);
     glVertex3f(spheres[v].x,spheres[v].y,spheres[v].z);
     glEnd();
@@ -133,11 +131,15 @@ void generate_spere(){
 	    glPopMatrix();
 	}
     glDisable(GL_LIGHTING);
-	if(bfs_algorithm == 1){
+	if(bfs_algorithm == 1)
+    {
 		for(i=0;i<no_of_nodes;i++)
 			for(j=0;j<no_of_nodes;j++)
 				if(node_matrix[i][j] == 1)
+                {
 					drawLines(i,j);
+
+                }
 	}
 	else{
 		for(i=0;i<no_of_nodes;i++)
@@ -195,7 +197,7 @@ void keyboard_sphere_window(unsigned char key, int x, int y){
 		case 'P':
 			if(bfs_algorithm == 1){
 				if(visited_bfs[index_value] == 1){
-					colors[index_value][0] = 1;
+					colors[index_value][0] = 0;
 					colors[index_value][1] = 1;
 					colors[index_value][2] = 0;
 				}
@@ -209,7 +211,7 @@ void keyboard_sphere_window(unsigned char key, int x, int y){
 			}
 			else{
 				if(visit[index_value] == 1){
-					colors[index_value][0] = 1;
+					colors[index_value][0] = 0;
 					colors[index_value][1] = 1;
 					colors[index_value][2] = 0;
 				}
@@ -293,7 +295,8 @@ void generate_points(int n){
     for(j=0;j<n;j++)
     {   spheres[j].x = p[j].x/2;
         spheres[j].y = p[j].y/2;
-        spheres[j].z = p[j].z/2;
+        spheres[j].
+z = p[j].z/2;
         spheres[j].radius = 0.1;
     }
 }
@@ -319,7 +322,7 @@ void display_algorithm(){
     glutKeyboardFunc(keyboard_sphere_window);
 	glutCreateMenu(menu);
 	glColor3f(1,1,1);
-	glutAddMenuEntry("Name",1);
+	glutAddMenuEntry("Quit",1);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glColor3f(0,0,0);
 	glutPostRedisplay();
@@ -416,13 +419,13 @@ void instructions(){
 	    glClear(GL_COLOR_BUFFER_BIT);
 		drawTextLarge(300,650,0,0,0,"Right click for BFS");
 		drawTextLarge(300,600,0,0,0,"Left click for DFS");
-		drawTextLarge(300,550,0,0,0,"Note : Node 1 is considered as source");
-		drawTextLarge(300,400,0,0,1,"Instructions for use:");
-		drawTextLarge(300,350,0,0,1,"-> Press P to identify the next visited node");
-		drawTextLarge(300,300,0,0,1,"-> All nodes reachable from root node turn green");
-		drawTextLarge(300,250,0,0,1,"-> All nodes not reachable from root node turn red");
-		drawTextLarge(300,200,0,0,1,"-> Press N to re enter values");
-		drawTextLarge(300,150,0,0,1,"-> Press Q to quit");
+
+		drawTextLarge(500,300,0,0,1,"Instructions for use:");
+		drawTextLarge(500,270,0,0,1,"-Press P to identify the next visited node");
+		drawTextLarge(500,240,0,0,1,"-All nodes reachable from root node turn green");
+		drawTextLarge(500,210,0,0,1,"-All nodes not reachable from root node turn red");
+		drawTextLarge(500,180,0,0,1,"-Press N to re enter values");
+		drawTextLarge(500,150,0,0,1,"-Press Q to quit");
 	    glutMouseFunc(rotate_sphere_window);
 		glFlush();
 }
@@ -547,9 +550,9 @@ void intro_display(){
     glClear(GL_COLOR_BUFFER_BIT);
     char value_str[10];
     value_str[0] = (char)(no_of_nodes + 48);
-    drawTextLarge(300,800,0,0,0,"Graphical Representation of DFS & BFS Algorthm");
-    drawTextLarge(300,700,0,0,0,"Melrick : 1BY14CS048");
-    drawTextLarge(300,600,0,0,0,"Jayasurya : 1BY14CS053");
+    drawTextLarge(300,800,0,0,0,"Graphical DFS & BFS Algorithm");
+    drawTextLarge(700,950,0,0,0,"Mohein : 1BY15CS053");
+    drawTextLarge(700,900,0,0,0,"Tanvi\t  : 1BY15CS092");
     drawTextLarge(200,500,0,0,0,"Enter number of nodes : ");
     if(backspace == 0 && no_of_nodes > 0){
         drawTextLarge(450,500,0,0,0,value_str);
